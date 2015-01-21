@@ -2,7 +2,7 @@
 
 ## Usage (Scala)
 
-```
+```scala
  val dataDir = "/path/to/destination/"
 
 // Getting files from specific years
@@ -29,9 +29,9 @@ println(s"Loaded ${summaries.size} summaries.")
 sbt assembly
 ```
 
-then add ``target/scala-2.11/NOAALoader-assembly-1.0.jar``` to your classpath
+then add ```target/scala-2.11/NOAALoader-assembly-1.0.jar``` to your classpath
 
-```
+```java
 String destFolder = "/path/to/destination/";
 new Downloader(2010, 2010, destFolder).download();
 new Extractor(destFolder).extractAll();
