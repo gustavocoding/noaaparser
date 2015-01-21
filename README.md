@@ -27,9 +27,18 @@ println(s"Loaded ${summaries.size} summaries.")
 ### Preparation
 ```
 sbt assembly
+mvn install:install-file -Dfile=target/scala-2.11/NOAALoader-assembly-1.0.jar -DgroupId=com.gustavonalle -DartifactId=noaaparser -Dversion=1.0 -Dpackaging=jar
 ```
 
-then add ```target/scala-2.11/NOAALoader-assembly-1.0.jar``` to your classpath
+then add the dependency to your pom:
+
+```xml
+<dependency>
+   <groupId>com.gustavonalle</groupId>
+   <artifactId>noaaparser</artifactId>
+   <version>1.0</version>
+</dependency>
+```
 
 ```java
 String destFolder = "/path/to/destination/";
