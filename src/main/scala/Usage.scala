@@ -1,3 +1,5 @@
+package noaaParser
+
 object Usage extends App {
 
    val dataDir = "/home/gfernandes/temp"

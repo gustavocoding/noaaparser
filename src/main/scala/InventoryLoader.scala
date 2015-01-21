@@ -1,9 +1,11 @@
+package noaaParser
+
 import scala.io.Source
 import scala.util.Try
 
 case class Country(code: String, name: String)
 
-case class Station(usaf: String, wban: Int, name: String, country: Option[Country], lat: Option[Float], long: Option[Float])
+case class Station(usaf: String, wban: Int, name: String, country: Option[Country], latitude: Option[Float], longitude: Option[Float])
 
 /**
  * Loader for countries and stations

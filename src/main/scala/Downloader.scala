@@ -1,3 +1,5 @@
+package noaaParser
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
@@ -14,9 +16,4 @@ class Downloader(fromYear: Int, toYear: Int, destFolder: String) {
       Await.result(seq, Duration.Inf)
    }
 
-}
-
-
-object TestDownload extends App {
-   new Downloader(2000, 2002, destFolder = "/tmp").download()
 }

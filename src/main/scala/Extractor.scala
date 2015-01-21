@@ -1,3 +1,5 @@
+package noaaParser
+
 import java.io.File
 
 import scala.sys.process._

@@ -1,3 +1,5 @@
+package noaaParser
+
 import java.util.concurrent.atomic.LongAdder
 
 import scala.io.Source
