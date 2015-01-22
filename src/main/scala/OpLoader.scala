@@ -1,24 +1,24 @@
 package noaaParser
 
+import java.io.File
 import java.util.concurrent.atomic.LongAdder
 
 import scala.io.Source
-import java.io.File
 
-case class YMD(d: Int, m: Int, y: Int) {
-   override def toString: String = List(d, m, y).mkString(",")
+case class YMD(y: Int, m: Int, d: Int) {
+  override def toString: String = List(d, m, y).mkString(",")
 }
 
 object YMD {
-   def apply(ymd: String): YMD = YMD(ymd.substring(0, 4).toInt, ymd.substring(4, 6).toInt, ymd.substring(6, 8).toInt)
+  def apply(ymd: String): YMD = YMD(ymd.substring(0, 4).toInt, ymd.substring(4, 6).toInt, ymd.substring(6, 8).toInt)
 }
 
 case class TemperatureF(value: Float) {
-   def toCelsius = (value - 32) * 5 / 9
+  def toCelsius = (value - 32) * 5 / 9
 }
 
 object TemperatureF {
-   def apply(s: String) = new TemperatureF(s.replaceAll("\\*", "").toFloat)
+  def apply(s: String) = new TemperatureF(s.replaceAll("\\*", "").toFloat)
 }
 
 /**
@@ -38,25 +38,25 @@ case class DaySummary(station: Option[Station], day: YMD, avgTemp: TemperatureF,
  */
 class OpLoader(dataDir: String)(fileFilter: File => Boolean) {
 
-   val inventoryLoader = new InventoryLoader(dataDir)
+  val inventoryLoader = new InventoryLoader(dataDir)
 
-   def loadSummary(opFile: String) = {
-      Source.fromFile(opFile).getLines().toStream
-      .tail.map(_.split(" +")).map(a =>
-      {
-         DaySummary(inventoryLoader.Stations.get(a(0)), YMD(a(2)), TemperatureF(a(3)), TemperatureF(a(18)), TemperatureF(a(17)))
-      })
-   }
+  def loadSummary(opFile: String) = {
+    Source.fromFile(opFile).getLines().toList
+      .tail.map(_.split(" +")).map(a => {
+      DaySummary(inventoryLoader.Stations.get(a(0)), YMD(a(2)), TemperatureF(a(3)), TemperatureF(a(18)), TemperatureF(a(17)))
+    })
+  }
 
-   def getSummaries = {
-      val counter = new LongAdder
-      val files: Array[File] = new File(dataDir).listFiles.filter(fileFilter)
-      val summaries = files.par.flatMap(x => {
-         counter.increment
-         printf(s"\rLoading file ${counter.intValue()} of ${files.size} - ${x.getAbsolutePath }")
-         loadSummary(x.getAbsolutePath)
-      })
-      println("\rLoading Done.")
-      summaries
-   }
+  def getSummaries(summaryFilter: DaySummary => Boolean) = {
+    val counter = new LongAdder
+    val files: Array[File] = new File(dataDir).listFiles.filter(fileFilter)
+    val summaries = files.par.flatMap(x => {
+      counter.increment
+      printf(s"\rLoading file ${counter.intValue()} of ${files.size} - ${x.getAbsolutePath}")
+      loadSummary(x.getAbsolutePath).filter(summaryFilter)
+
+    })
+    println("\rLoading Done.")
+    summaries
+  }
 }
