@@ -23,18 +23,20 @@ println(s"Loaded ${summaries.size} summaries.")
 ## Usage (Java 8)
 
 ### Preparation
+
+Publish the artifacts to the local maven repository:
+
 ```
-sbt assembly
-mvn install:install-file -Dfile=target/scala-2.11/NOAALoader-assembly-1.0.jar -DgroupId=com.gustavonalle -DartifactId=noaaparser -Dversion=1.0 -Dpackaging=jar
+sbt +publish
 ```
 
 then add the dependency to your pom:
 
 ```xml
 <dependency>
-   <groupId>com.gustavonalle</groupId>
-   <artifactId>noaaparser</artifactId>
-   <version>1.0</version>
+    <groupId>noaaloader</groupId>
+    <artifactId>noaaloader_2.11</artifactId>
+    <version>1.0</version>
 </dependency>
 ```
 
