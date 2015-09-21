@@ -16,9 +16,8 @@ class InventoryLoader(dataDir: String) {
   val StationFile = "isd-history.csv"
   lazy val Countries: Map[String, Country] = {
     val tuples = Source.fromFile(s"$dataDir/$CountryFile").getLines()
-      .filter(!_.isEmpty)
-      .filter(l => List(":", "FIPS").forall(v => !l.startsWith(v)))
-      .map(_.split("          "))
+      .drop(2)
+      .map(_.split("\\s+"))
       .map(a => a(0) -> Country(a(0), a(1)))
     Map(tuples.toList: _*)
   }

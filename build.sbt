@@ -1,6 +1,6 @@
 name := "NOAALoader"
 
-version := "1.0"
+version := "1.1"
 
 crossScalaVersions := Seq("2.10.4", "2.11.5")
 
