@@ -27,7 +27,7 @@ println(s"Loaded ${summaries.size} summaries.")
 Publish the artifacts to the local maven repository:
 
 ```
-sbt +publish
+./sbt +publish
 ```
 
 then add the dependency to your pom:
