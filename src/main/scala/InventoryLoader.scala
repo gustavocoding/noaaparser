@@ -17,7 +17,7 @@ class InventoryLoader(dataDir: String) {
   lazy val Countries: Map[String, Country] = {
     val tuples = Source.fromFile(s"$dataDir/$CountryFile").getLines()
       .drop(2)
-      .map(_.split("\\s+"))
+      .map(_.split("\\s{2,}"))
       .map(a => a(0) -> Country(a(0), a(1)))
     Map(tuples.toList: _*)
   }
